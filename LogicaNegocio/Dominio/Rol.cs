@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LogicaAplicacion.CasosUso
+namespace LogicaNegocio.Dominio
 {
-    public class CUBajaArticulo
+    public class Rol
     {
+        public int id {  get; set; }
+        public string nombre { get; set; }
+
     }
 }

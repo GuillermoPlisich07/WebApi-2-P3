@@ -15,7 +15,7 @@ namespace LogicaNegocio.Dominio
 
         public string descripcion { get; set; }
 
-        public string codigoProveedor { get; set; }
+        public long codigoProveedor { get; set; }
 
         public decimal precioPublico { get; set; }
 
