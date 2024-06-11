@@ -17,54 +17,10 @@ namespace LogicaDatos.Repositorios
         {
             Contexto = ctx;
         }
-        public void Add(Usuario item)
-        {
-            if (item != null)
-            {
-                item.EncriptarPassword();
-                Contexto.Usuarios.Add(item);
-                Contexto.SaveChanges(); // Aca es el alta en EF
-            }
-        }
 
         public List<Usuario> FindAll()
         {
             return Contexto.Usuarios.ToList();
-        }
-
-        public Usuario FindById(int id)
-        {
-            return Contexto.Usuarios
-                .Where(Usuario => Usuario.id == id)
-                .SingleOrDefault();
-        }
-
-        public void Remove(int id)
-        {
-            Usuario aBorrar = Contexto.Usuarios.Find(id);
-            if (aBorrar != null)
-            {
-                Contexto.Usuarios.Remove(aBorrar);
-                Contexto.SaveChanges();
-            }
-        }
-
-        public void Update(Usuario obj)
-        {
-            // Verificar si el campo passwordHash si es vacio y es nulo
-            if (string.IsNullOrEmpty(obj.password))
-            {
-                // Actualizar todos los campos excepto passwordHash
-                Contexto.Entry(obj).State = EntityState.Modified;
-                Contexto.Entry(obj).Property(u => u.passwordHash).IsModified = false;
-            }
-            else
-            {
-                obj.EncriptarPassword();
-                Contexto.Usuarios.Update(obj);
-            }
-
-            Contexto.SaveChanges();
         }
 
         public Usuario Login(string email, string password)
@@ -86,8 +42,15 @@ namespace LogicaDatos.Repositorios
         public Usuario FindByEmail(string email)
         {
             return Contexto.Usuarios
-                .Where(Usuario => Usuario.email == email)
+                .Where(usu => usu.email == email)
                 .SingleOrDefault();
+        }
+
+        public Usuario FindById(int id)
+        {
+            return Contexto.Usuarios
+            .Where(usu => usu.id == id)
+            .SingleOrDefault();
         }
     }
 }

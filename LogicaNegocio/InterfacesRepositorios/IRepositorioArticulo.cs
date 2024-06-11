@@ -7,7 +7,12 @@ using System.Threading.Tasks;
 
 namespace LogicaNegocio.InterfacesRepositorios
 {
-    public interface IRepositorioArticulo : IRepositorio<Articulo>
+    public interface IRepositorioArticulo
     {
+        List<Articulo> FindAll();
+
+        Articulo FindById(int id);
+
+        void Update(Articulo obj);
     }
 }

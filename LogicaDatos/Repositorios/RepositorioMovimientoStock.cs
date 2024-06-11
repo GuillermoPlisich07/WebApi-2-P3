@@ -38,19 +38,5 @@ namespace LogicaDatos.Repositorios
                 .SingleOrDefault();
         }
 
-        public void Remove(int id)
-        {
-            MovimientoStock aBorrar = Contexto.MovimientosStock.Find(id);
-            if (aBorrar != null)
-            {
-                Contexto.MovimientosStock.Remove(aBorrar);
-                Contexto.SaveChanges();
-            }
-        }
-
-        public void Update(MovimientoStock obj)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

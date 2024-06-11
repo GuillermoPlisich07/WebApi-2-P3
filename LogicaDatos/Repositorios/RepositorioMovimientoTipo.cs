@@ -18,7 +18,11 @@ namespace LogicaDatos.Repositorios
         }
         public void Add(MovimientoTipo item)
         {
-            throw new NotImplementedException();
+            if (item != null)
+            {
+                Contexto.MovimientosTipo.Add(item);
+                Contexto.SaveChanges();
+            }
         }
 
         public List<MovimientoTipo> FindAll()
@@ -28,17 +32,25 @@ namespace LogicaDatos.Repositorios
 
         public MovimientoTipo FindById(int id)
         {
-            throw new NotImplementedException();
+            return Contexto.MovimientosTipo
+                .Where(mt => mt.id == id)
+                .SingleOrDefault();
         }
 
         public void Remove(int id)
         {
-            throw new NotImplementedException();
+            MovimientoTipo aBorrar = Contexto.MovimientosTipo.Find(id);
+            if (aBorrar != null)
+            {
+                Contexto.MovimientosTipo.Remove(aBorrar);
+                Contexto.SaveChanges();
+            }
         }
 
         public void Update(MovimientoTipo obj)
         {
-            throw new NotImplementedException();
+            Contexto.Update(obj);
+            Contexto.SaveChanges();
         }
     }
 }
