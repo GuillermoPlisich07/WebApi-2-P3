@@ -13,6 +13,7 @@ namespace LogicaNegocio.Dominio
         public DateTime fechaDeMovimiento { get; set; }
         public Articulo articulo { get; set; }
         public MovimientoTipo tipo { get; set; }
+        public Usuario usuario { get; set; }
         public int topeMovimiento { get; set; }
         public int cantidadMovidas { get; set; }
 

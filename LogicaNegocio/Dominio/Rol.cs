@@ -12,4 +12,5 @@ namespace LogicaNegocio.Dominio
         public string nombre { get; set; }
 
     }
+
 }

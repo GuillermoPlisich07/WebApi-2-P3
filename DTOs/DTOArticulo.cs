@@ -16,7 +16,7 @@ namespace DTOs
         public string Descripcion { get; set; }
 
         [DisplayName("Codigo Proveedor")]
-        public string CodigoProveedor { get; set; }
+        public long CodigoProveedor { get; set; }
 
         [DisplayName("Precio Publico")]
         public decimal PrecioPublico { get; set; }

@@ -1,5 +1,4 @@
 using DTOs;
-using LogicaAplicacion.CasosUso;
 using LogicaAplicacion.InterfacesCU;
 using LogicaDatos.Repositorios;
 using LogicaNegocio.InterfacesRepositorios;
@@ -15,8 +14,6 @@ namespace WebApi_2_P3
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
-            builder.Services.AddScoped<ICUAlta<DTOArticulo>, CUAltaArticulo>();
 
             builder.Services.AddScoped<IRepositorioArticulo, RepositorioArticulo>();
             builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();

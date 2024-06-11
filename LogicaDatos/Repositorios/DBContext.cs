@@ -56,7 +56,6 @@ namespace LogicaDatos.Repositorios
             modelBuilder.Entity<Articulo>()
                 .HasCheckConstraint("CK_Articulo_CodigoProveedor", "codigoProveedor >= 1000000000000");
 
-
             //USUARIO
 
             modelBuilder.Entity<Usuario>().HasIndex(u => u.email).IsUnique();
@@ -98,8 +97,8 @@ namespace LogicaDatos.Repositorios
 
             modelBuilder.Entity<Usuario>()
                 .HasOne(u => u.rol)
-                .WithOne()
-                .HasForeignKey("RolId")
+                .WithMany()
+                .HasForeignKey("RolId") // Opcional si la propiedad en Usuario se llama "RolId"
                 .IsRequired();
 
             // ROL
@@ -120,9 +119,62 @@ namespace LogicaDatos.Repositorios
 
             // MOVIMIENTO STOCK
 
-            .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            modelBuilder.Entity<MovimientoStock>()
+                .HasKey(ms => ms.id);
+
+            modelBuilder.Entity<MovimientoStock>()
+                .Property(ms => ms.id)
+                .IsRequired()
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<MovimientoStock>()
+                .Property(ms => ms.fechaDeMovimiento)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .IsRequired();
+
+            modelBuilder.Entity<MovimientoStock>()
+                .Property(ms => ms.cantidadMovidas)
+                .IsRequired()
+                .HasDefaultValue(0);
+
+            modelBuilder.Entity<MovimientoStock>()
+                .HasOne(ms => ms.articulo)
+                .WithMany()
+                .HasForeignKey("ArticuloId")
+                .IsRequired();
+
+            modelBuilder.Entity<MovimientoStock>()
+                .HasOne(ms => ms.tipo)
+                .WithMany()
+                .HasForeignKey("TipoMovimientoId")
+                .IsRequired();
+
+            modelBuilder.Entity<MovimientoStock>()
+                .HasOne(ms => ms.usuario)
+                .WithMany()
+                .HasForeignKey("UsuarioId")
+                .IsRequired();
 
             // MOVIMIENTO TIPO
+            
+            modelBuilder.Entity<MovimientoTipo>()
+                .HasKey(tm => tm.id);
+
+            modelBuilder.Entity<MovimientoTipo>()
+                .Property(tm => tm.id)
+                .IsRequired()
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<MovimientoTipo>()
+                .Property(tm => tm.nombre)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            modelBuilder.Entity<MovimientoTipo>()
+                .HasIndex(tm => tm.nombre)
+                .IsUnique();
+
+            
 
             base.OnModelCreating(modelBuilder);
 
