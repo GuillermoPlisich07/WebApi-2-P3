@@ -36,5 +36,7 @@ namespace LogicaDatos.Repositorios
             Contexto.Update(obj);
             Contexto.SaveChanges();
         }
+
+      
     }
 }
