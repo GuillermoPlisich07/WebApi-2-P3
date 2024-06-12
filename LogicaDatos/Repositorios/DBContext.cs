@@ -17,8 +17,25 @@ namespace LogicaDatos.Repositorios
         public DbSet<MovimientoTipo> MovimientosTipo { get; set; }
         public DbSet<Rol> Roles { get; set; }
 
+        public DbSet<Parametro> Parametros { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // PARAMETRO
+
+            modelBuilder.Entity<Parametro>()
+                .HasKey(a => a.id);
+
+            modelBuilder.Entity<Parametro>()
+                .Property(a => a.id)
+                .IsRequired()
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Parametro>()
+                .Property(ms => ms.topeMovimiento)
+                .IsRequired()
+                .HasDefaultValue(0);
+
 
             // ARTICULO
 
