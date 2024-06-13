@@ -1,6 +1,5 @@
 ﻿using DTOs;
 using LogicaAplicacion.InterfacesCU;
-using LogicaNegocio.Dominio;
 using LogicaNegocio.InterfacesRepositorios;
 using System;
 using System.Collections.Generic;
@@ -10,19 +9,18 @@ using System.Threading.Tasks;
 
 namespace LogicaAplicacion.CasosUso
 {
-    public class CUAltaMovimientoTipo : ICUAlta<DTOMovimientoTipo>
+    public class CUBuscarMovimientoTipo : ICUBuscarPorId<DTOMovimientoTipo>
     {
         public IRepositorioMovimientoTipo Repo { get; set; }
 
-        public CUAltaMovimientoTipo(IRepositorioMovimientoTipo repo)
+        public CUBuscarMovimientoTipo(IRepositorioMovimientoTipo repo)
         {
             Repo = repo;
         }
 
-        public void Alta(DTOMovimientoTipo nuevo) 
+        public DTOMovimientoTipo Buscar(int id)
         {
-            MovimientoTipo tipo = MapperMovimientoTipo.ToMovimientoTipo(nuevo);
-            Repo.Add(tipo);
+            return MapperMovimientoTipo.ToDTOMovimientoTipo(Repo.FindById(id));
         }
     }
 }

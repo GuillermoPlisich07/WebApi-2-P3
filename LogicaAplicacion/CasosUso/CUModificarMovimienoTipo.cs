@@ -1,6 +1,5 @@
 ﻿using DTOs;
 using LogicaAplicacion.InterfacesCU;
-using LogicaNegocio.Dominio;
 using LogicaNegocio.InterfacesRepositorios;
 using System;
 using System.Collections.Generic;
@@ -10,19 +9,18 @@ using System.Threading.Tasks;
 
 namespace LogicaAplicacion.CasosUso
 {
-    public class CUAltaMovimientoTipo : ICUAlta<DTOMovimientoTipo>
+    public class CUModificarMovimienoTipo : ICUModificar<DTOMovimientoTipo>
     {
         public IRepositorioMovimientoTipo Repo { get; set; }
 
-        public CUAltaMovimientoTipo(IRepositorioMovimientoTipo repo)
+        public CUModificarMovimienoTipo(IRepositorioMovimientoTipo repo)
         {
             Repo = repo;
         }
 
-        public void Alta(DTOMovimientoTipo nuevo) 
+        public void Modificar(DTOMovimientoTipo Tipo)
         {
-            MovimientoTipo tipo = MapperMovimientoTipo.ToMovimientoTipo(nuevo);
-            Repo.Add(tipo);
+            Repo.Update(MapperMovimientoTipo.ToMovimientoTipo(Tipo));
         }
     }
 }

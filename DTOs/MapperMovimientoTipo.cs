@@ -33,5 +33,7 @@ namespace DTOs
         {
             return tipos.Select(tipos => ToDTOMovimientoTipo(tipos)).ToList();
         }
+
+        
     }
 }
