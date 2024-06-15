@@ -11,22 +11,28 @@ namespace DTOs
     {
         public static MovimientoTipo ToMovimientoTipo(DTOMovimientoTipo movimientoTipo)
         {
+            if (movimientoTipo == null) return null;
+            
             return new MovimientoTipo()
             {
                 id = movimientoTipo.id,
                 nombre = movimientoTipo.nombre,
                 incrDecre = movimientoTipo.incrDecre
             };
+            
         }
 
         public static DTOMovimientoTipo ToDTOMovimientoTipo(MovimientoTipo tipo) 
         {
+            if (tipo == null) return null;
+            
             return new DTOMovimientoTipo()
             {
                 id = tipo.id,
                 nombre = tipo.nombre,
                 incrDecre = tipo.incrDecre
             };
+            
         }
 
         public static List<DTOMovimientoTipo> ToListadoSimpleDTO(List<MovimientoTipo> tipos) 

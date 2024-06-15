@@ -24,7 +24,9 @@ namespace WebApi_2_P3
 
             builder.Services.AddScoped<IRepositorioArticulo, RepositorioArticulo>();
             builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
-
+            builder.Services.AddScoped<IRepositorioMovimientoTipo, RepositorioMovimientoTipo>();
+            builder.Services.AddScoped<IRepositorioMovimientoStock, RepositorioMovimientoStock>();
+            builder.Services.AddScoped<IRepositorioParametro, RepositorioParametro>();
 
             builder.Services.AddDbContext<DBContext>();
 
