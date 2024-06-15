@@ -14,11 +14,12 @@ namespace DTOs
 
             return new Articulo()
             {
-                nombre = articulo.Nombre,
-                descripcion = articulo.Descripcion,
-                codigoProveedor = articulo.CodigoProveedor,
-                precioPublico = articulo.PrecioPublico,
-                stock = articulo.Stock,
+                id = articulo.id,
+                nombre = articulo.nombre,
+                descripcion = articulo.descripcion,
+                codigoProveedor = articulo.codigoProveedor,
+                precioPublico = articulo.precioPublico,
+                stock = articulo.stock,
 
             };
         }
@@ -28,12 +29,12 @@ namespace DTOs
 
             return new DTOArticulo()
             {
-                Id = articulo.id,
-                Nombre = articulo.nombre,
-                Descripcion = articulo.descripcion,
-                CodigoProveedor = articulo.codigoProveedor,
-                PrecioPublico = articulo.precioPublico,
-                Stock = articulo.stock
+                id = articulo.id,
+                nombre = articulo.nombre,
+                descripcion = articulo.descripcion,
+                codigoProveedor = articulo.codigoProveedor,
+                precioPublico = articulo.precioPublico,
+                stock = articulo.stock
             };
         }
         public static List<DTOArticulo> ToListadoSimpleDTO(List<Articulo> articulos)

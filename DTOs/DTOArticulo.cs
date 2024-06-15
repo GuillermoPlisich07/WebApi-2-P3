@@ -9,18 +9,18 @@ namespace DTOs
 {
     public class DTOArticulo
     {
-        public int Id { get; set; }
+        public int id { get; set; }
 
-        public string Nombre { get; set; }
+        public string nombre { get; set; }
 
-        public string Descripcion { get; set; }
+        public string descripcion { get; set; }
 
         [DisplayName("Codigo Proveedor")]
-        public long CodigoProveedor { get; set; }
+        public long codigoProveedor { get; set; }
 
         [DisplayName("Precio Publico")]
-        public decimal PrecioPublico { get; set; }
+        public decimal precioPublico { get; set; }
 
-        public int Stock { get; set; }
+        public int stock { get; set; }
     }
 }
