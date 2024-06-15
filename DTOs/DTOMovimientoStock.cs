@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LogicaNegocio.Dominio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,12 +9,11 @@ namespace DTOs
 {
     public class DTOMovimientoStock
     {
-        public int id {  get; set; }
-        public List<DTOArticulo> articulos { get; set; }
-        public int idArticulo {  get; set; }
-        public List<DTOMovimientoTipo> tipos { get; set; }
-        public int idMovimientoTipo { get; set; }
-        public int idUsuario { get; set; }
+        public int id { get; set; }
+        public DateTime fechaDeMovimiento { get; set; }
+        public DTOArticulo articulo { get; set; }
+        public DTOMovimientoTipo tipo { get; set; }
+        public DTOUsuario usuario { get; set; }
         public int cantidadMovidas { get; set; }
     }
 }
