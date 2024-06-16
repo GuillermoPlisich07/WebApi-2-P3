@@ -10,5 +10,7 @@ namespace LogicaNegocio.InterfacesRepositorios
     public interface IRepositorioParametro
     {
         void Update(Parametro obj);
+
+        Parametro FindById(int id);
     }
 }

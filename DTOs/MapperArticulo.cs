@@ -11,7 +11,7 @@ namespace DTOs
     {
         public static Articulo ToArticulo(DTOArticulo articulo)
         {
-
+            if (articulo == null) return null;
             return new Articulo()
             {
                 id = articulo.id,
@@ -26,7 +26,7 @@ namespace DTOs
 
         public static DTOArticulo ToDTOArticulo(Articulo articulo)
         {
-
+            if (articulo == null) return null;
             return new DTOArticulo()
             {
                 id = articulo.id,

@@ -21,5 +21,12 @@ namespace LogicaDatos.Repositorios
             Contexto.Update(obj);
             Contexto.SaveChanges();
         }
+
+        public Parametro FindById(int id)
+        {
+            return Contexto.Parametros
+               .Where(pa => pa.id == id)
+               .SingleOrDefault();
+        }
     }
 }

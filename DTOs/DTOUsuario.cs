@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LogicaNegocio.Dominio;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -32,5 +33,7 @@ namespace DTOs
         [MinLength(6, ErrorMessage = "La contraseña debe tener al menos 6 caracteres")]
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.,;¡!])[A-Za-z\d.,;¡!]+$", ErrorMessage = "La contraseña no cumple con los requisitos mínimos")]
         public string? Password { get; set; }
+
+        public DTORol rol { get; set; }
     }
 }

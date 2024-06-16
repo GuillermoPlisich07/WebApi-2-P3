@@ -11,7 +11,7 @@ namespace DTOs
         public int id {  get; set; }
         public int idArticulo {  get; set; }
         public int idMovimientoTipo { get; set; }
-        public int idUsuario { get; set; }
+        public string email { get; set; }
         public int cantidadMovidas { get; set; }
     }
 }

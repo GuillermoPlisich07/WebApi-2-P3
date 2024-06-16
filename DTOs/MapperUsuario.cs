@@ -11,6 +11,7 @@ namespace DTOs
     {
         public static Usuario ToUsuario(DTOUsuario usuario)
         {
+            if (usuario == null) return null;
             return new Usuario()
             {
                 id = usuario.Id,
@@ -23,19 +24,15 @@ namespace DTOs
 
         public static DTOUsuario ToDTOUsuario(Usuario usuario)
         {
-
-            if (usuario != null)
+            if (usuario == null) return null;
+            return new DTOUsuario()
             {
-                return new DTOUsuario()
-                {
-                    Id = usuario.id,
-                    Nombre = usuario.nombre,
-                    Apellido = usuario.apellido,
-                    Email = usuario.email,
-                    Password = usuario.passwordHash
-                };
-            }
-            return null;
+                Id = usuario.id,
+                Nombre = usuario.nombre,
+                Apellido = usuario.apellido,
+                Email = usuario.email,
+                Password = usuario.passwordHash
+            };
         }
 
         public static List<DTOUsuario> ToListadoUsuarioDTO(List<Usuario> usuarios)
