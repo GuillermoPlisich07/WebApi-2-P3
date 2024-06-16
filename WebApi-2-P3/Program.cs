@@ -16,17 +16,31 @@ namespace WebApi_2_P3
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            //Movimiento Tipo
             builder.Services.AddScoped<ICUBuscarPorId<DTOMovimientoTipo>, CUBuscarMovimientoTipo>();
             builder.Services.AddScoped<ICUAlta<DTOMovimientoTipo>, CUAltaMovimientoTipo>();
             builder.Services.AddScoped<ICUListado<DTOMovimientoTipo>, CUListadoMovimientoTipo>();
             builder.Services.AddScoped<ICUBaja, CUBajaMovimientoTipo>();
             builder.Services.AddScoped<ICUModificar<DTOMovimientoTipo>, CUModificarMovimienoTipo>();
+            builder.Services.AddScoped<ICUBuscarPorId<DTOMovimientoTipo>, CUBuscarMovimientoTipo>();
 
+            //Articulo 
             builder.Services.AddScoped<IRepositorioArticulo, RepositorioArticulo>();
             builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
             builder.Services.AddScoped<IRepositorioMovimientoTipo, RepositorioMovimientoTipo>();
             builder.Services.AddScoped<IRepositorioMovimientoStock, RepositorioMovimientoStock>();
             builder.Services.AddScoped<IRepositorioParametro, RepositorioParametro>();
+            builder.Services.AddScoped<ICUBuscarPorId<DTOArticulo>, CUBuscarArticulo>();
+
+            //Movimiento Stock
+            builder.Services.AddScoped<ICUAlta<DTOMovimientoStock>, CUAltaMovimientoStock>();
+
+            //Usuario
+            builder.Services.AddScoped<ICUBuscarByEmail<DTOUsuario>, CUBuscarUsuarioByEmail>();
+
+            //Parametro
+            builder.Services.AddScoped<ICUBuscarPorId<DTOParametro>, CUBuscarParametro>();
+
 
             builder.Services.AddDbContext<DBContext>();
 
