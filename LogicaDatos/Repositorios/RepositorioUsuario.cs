@@ -42,6 +42,7 @@ namespace LogicaDatos.Repositorios
         public Usuario FindByEmail(string email)
         {
             return Contexto.Usuarios
+                .Include(usu => usu.rol)
                 .Where(usu => usu.email == email)
                 .SingleOrDefault();
         }

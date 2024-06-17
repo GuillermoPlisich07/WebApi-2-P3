@@ -10,5 +10,6 @@ namespace DTOs
     {
         public int id { get; set; }
         public int topeMovimiento { get; set; }
+        public int topePaginado { get; set; }
     }
 }

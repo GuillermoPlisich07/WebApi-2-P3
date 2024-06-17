@@ -18,26 +18,29 @@ namespace WebApi_2_P3.Controllers
         public ICUBuscarPorId<DTOMovimientoTipo> CUBuscarMovimientoTipo { get; set; }
         public ICUBuscarByEmail<DTOUsuario> CUBuscarByEmail { get; set; }
         public ICUBuscarPorId<DTOParametro> CUBuscarParametro { get; set; }
+        public ICUListadoAnualesPorTipo<DTOMovimientoStock> CUListadoAnualesPorTipo { get; set; }
+        public ICUListadoArticuloRangoPorFecha<DTOMovimientoStock> CUListadoArticuloRangoPorFecha { get; set; }
+        public ICUListadoArticuloTipoDescendente<DTOMovimientoStock> CUListadoArticuloTipoDescendente { get; set; }
 
         public MovimientoStockController(ICUAlta<DTOMovimientoStock> cUAltaMovimientoStock, 
             ICUBuscarPorId<DTOArticulo> cUBuscarArticulo,
             ICUBuscarPorId<DTOMovimientoTipo> cUBuscarMovimientoTipo,
             ICUBuscarByEmail<DTOUsuario> cUBuscarByEmail,
-            ICUBuscarPorId<DTOParametro> cUBuscarParametro)
+            ICUBuscarPorId<DTOParametro> cUBuscarParametro, 
+            ICUListadoAnualesPorTipo<DTOMovimientoStock> cUListadoAnualesPorTipo,
+            ICUListadoArticuloRangoPorFecha<DTOMovimientoStock> cUListadoArticuloRangoPorFecha,
+            ICUListadoArticuloTipoDescendente<DTOMovimientoStock> cUListadoArticuloTipoDescendente)
         {
             CUAltaMovimientoStock = cUAltaMovimientoStock;
             CUBuscarArticulo = cUBuscarArticulo;
             CUBuscarMovimientoTipo = cUBuscarMovimientoTipo;
             CUBuscarByEmail = cUBuscarByEmail;
             CUBuscarParametro = cUBuscarParametro;
+            CUListadoAnualesPorTipo = cUListadoAnualesPorTipo;
+            CUListadoArticuloRangoPorFecha = cUListadoArticuloRangoPorFecha;
+            CUListadoArticuloTipoDescendente = cUListadoArticuloTipoDescendente;
         }
 
-        // GET: api/<MovimientoStockController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
 
         // GET api/<MovimientoStockController>/5
         [HttpGet("{id}")]
@@ -88,16 +91,13 @@ namespace WebApi_2_P3.Controllers
             }
         }
 
-        // PUT api/<MovimientoStockController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        // GET api/<MovimientoStockController>/5
+        [HttpGet("ListadoAnualesPorTipo/{id}")]
+        public IActionResult ListadoAnualesPorTipo(int id)
         {
+            return Ok();
         }
 
-        // DELETE api/<MovimientoStockController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+
     }
 }

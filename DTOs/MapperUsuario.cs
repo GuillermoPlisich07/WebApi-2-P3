@@ -19,6 +19,7 @@ namespace DTOs
                 apellido = usuario.Apellido,
                 email = usuario.Email,
                 password = usuario.Password,
+                rol = MapperRol.ToRol(usuario.rol)
             };
         }
 
@@ -31,7 +32,8 @@ namespace DTOs
                 Nombre = usuario.nombre,
                 Apellido = usuario.apellido,
                 Email = usuario.email,
-                Password = usuario.passwordHash
+                Password = usuario.passwordHash,
+                rol = MapperRol.ToDTORol(usuario.rol)
             };
         }
 

@@ -15,8 +15,8 @@ namespace DTOs
             return new Parametro()
             {
                 id = parametro.id,
-                topeMovimiento = parametro.topeMovimiento
-
+                topeMovimiento = parametro.topeMovimiento,
+                topePaginado = parametro.topePaginado
             };
         }
 
@@ -26,7 +26,8 @@ namespace DTOs
             return new DTOParametro()
             {
                 id = parametro.id,
-                topeMovimiento = parametro.topeMovimiento
+                topeMovimiento = parametro.topeMovimiento,
+                topePaginado = parametro.topePaginado
             };
 
         }

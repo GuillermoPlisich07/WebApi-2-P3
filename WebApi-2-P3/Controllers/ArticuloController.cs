@@ -1,4 +1,5 @@
 ﻿using DTOs;
+using LogicaAplicacion.CasosUso;
 using LogicaAplicacion.InterfacesCU;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,43 +11,27 @@ namespace WebApi_2_P3.Controllers
     [ApiController]
     public class ArticuloController : ControllerBase
     {
-        public ICUAlta<DTOArticulo> CUAltaArticulo { get; set; }
+        public ICUListado<DTOArticulo> CUListadoArticulo { get; set; }
 
-        public ArticuloController(ICUAlta<DTOArticulo> cUAltaArticulo)
+        public ArticuloController(ICUListado<DTOArticulo> cUListadoArticulo)
         {
-            CUAltaArticulo = cUAltaArticulo;
+            CUListadoArticulo = cUListadoArticulo;
         }
 
         // GET: api/<ArticuloController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                var movimientoTipo = CUListadoArticulo.ObtenerListado();
+                return Ok(movimientoTipo);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
-        // GET api/<ArticuloController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<ArticuloController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<ArticuloController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<ArticuloController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

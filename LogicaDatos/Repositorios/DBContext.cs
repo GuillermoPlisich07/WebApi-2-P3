@@ -36,6 +36,11 @@ namespace LogicaDatos.Repositorios
                 .IsRequired()
                 .HasDefaultValue(0);
 
+            modelBuilder.Entity<Parametro>()
+                .Property(ms => ms.topePaginado)
+                .IsRequired()
+                .HasDefaultValue(0);
+
 
             // ARTICULO
 
@@ -146,8 +151,8 @@ namespace LogicaDatos.Repositorios
 
             modelBuilder.Entity<MovimientoStock>()
                 .Property(ms => ms.fechaDeMovimiento)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .IsRequired();
+                .IsRequired()
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             modelBuilder.Entity<MovimientoStock>()
                 .Property(ms => ms.cantidadMovidas)
@@ -158,22 +163,28 @@ namespace LogicaDatos.Repositorios
                 .HasOne(ms => ms.articulo)
                 .WithMany()
                 .HasForeignKey("ArticuloId")
-                .IsRequired();
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_MovStock_Articulo");
 
             modelBuilder.Entity<MovimientoStock>()
                 .HasOne(ms => ms.tipo)
                 .WithMany()
                 .HasForeignKey("TipoMovimientoId")
-                .IsRequired();
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_MovStock_MovTipo");
 
             modelBuilder.Entity<MovimientoStock>()
                 .HasOne(ms => ms.usuario)
                 .WithMany()
                 .HasForeignKey("UsuarioId")
-                .IsRequired();
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_MovStock_Usuario");
 
             // MOVIMIENTO TIPO
-            
+
             modelBuilder.Entity<MovimientoTipo>()
                 .HasKey(tm => tm.id);
 

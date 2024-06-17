@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace LogicaDatos.Migrations
 {
     /// <inheritdoc />
-    public partial class Inicial : Migration
+    public partial class Inicio : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -36,11 +36,25 @@ namespace LogicaDatos.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    incrDecre = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    incrDecre = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MovimientosTipo", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Parametros",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    topeMovimiento = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    topePaginado = table.Column<int>(type: "int", nullable: false, defaultValue: 0)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Parametros", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -89,26 +103,25 @@ namespace LogicaDatos.Migrations
                     ArticuloId = table.Column<int>(type: "int", nullable: false),
                     TipoMovimientoId = table.Column<int>(type: "int", nullable: false),
                     UsuarioId = table.Column<int>(type: "int", nullable: false),
-                    topeMovimiento = table.Column<int>(type: "int", nullable: false),
                     cantidadMovidas = table.Column<int>(type: "int", nullable: false, defaultValue: 0)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MovimientosStock", x => x.id);
                     table.ForeignKey(
-                        name: "FK_MovimientosStock_Articulos_ArticuloId",
+                        name: "FK_MovStock_Articulo",
                         column: x => x.ArticuloId,
                         principalTable: "Articulos",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MovimientosStock_MovimientosTipo_TipoMovimientoId",
+                        name: "FK_MovStock_MovTipo",
                         column: x => x.TipoMovimientoId,
                         principalTable: "MovimientosTipo",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MovimientosStock_Usuarios_UsuarioId",
+                        name: "FK_MovStock_Usuario",
                         column: x => x.UsuarioId,
                         principalTable: "Usuarios",
                         principalColumn: "id",
@@ -153,6 +166,9 @@ namespace LogicaDatos.Migrations
         {
             migrationBuilder.DropTable(
                 name: "MovimientosStock");
+
+            migrationBuilder.DropTable(
+                name: "Parametros");
 
             migrationBuilder.DropTable(
                 name: "Articulos");

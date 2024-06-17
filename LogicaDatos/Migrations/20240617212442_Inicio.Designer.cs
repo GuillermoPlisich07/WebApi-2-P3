@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LogicaDatos.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20240611013048_Inicial")]
-    partial class Inicial
+    [Migration("20240617212442_Inicio")]
+    partial class Inicio
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -88,9 +88,6 @@ namespace LogicaDatos.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-                    b.Property<int>("topeMovimiento")
-                        .HasColumnType("int");
-
                     b.HasKey("id");
 
                     b.HasIndex("ArticuloId");
@@ -110,9 +107,8 @@ namespace LogicaDatos.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<string>("incrDecre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("incrDecre")
+                        .HasColumnType("bit");
 
                     b.Property<string>("nombre")
                         .IsRequired()
@@ -125,6 +121,29 @@ namespace LogicaDatos.Migrations
                         .IsUnique();
 
                     b.ToTable("MovimientosTipo");
+                });
+
+            modelBuilder.Entity("LogicaNegocio.Dominio.Parametro", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<int>("topeMovimiento")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<int>("topePaginado")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.HasKey("id");
+
+                    b.ToTable("Parametros");
                 });
 
             modelBuilder.Entity("LogicaNegocio.Dominio.Rol", b =>
@@ -192,19 +211,22 @@ namespace LogicaDatos.Migrations
                         .WithMany()
                         .HasForeignKey("ArticuloId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_MovStock_Articulo");
 
                     b.HasOne("LogicaNegocio.Dominio.MovimientoTipo", "tipo")
                         .WithMany()
                         .HasForeignKey("TipoMovimientoId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_MovStock_MovTipo");
 
                     b.HasOne("LogicaNegocio.Dominio.Usuario", "usuario")
                         .WithMany()
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_MovStock_Usuario");
 
                     b.Navigation("articulo");
 

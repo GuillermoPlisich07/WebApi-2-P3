@@ -16,6 +16,15 @@ namespace WebApi_2_P3
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            
+
+            //Repositorios
+            builder.Services.AddScoped<IRepositorioArticulo, RepositorioArticulo>();
+            builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
+            builder.Services.AddScoped<IRepositorioMovimientoTipo, RepositorioMovimientoTipo>();
+            builder.Services.AddScoped<IRepositorioMovimientoStock, RepositorioMovimientoStock>();
+            builder.Services.AddScoped<IRepositorioParametro, RepositorioParametro>();
+
             //Movimiento Tipo
             builder.Services.AddScoped<ICUBuscarPorId<DTOMovimientoTipo>, CUBuscarMovimientoTipo>();
             builder.Services.AddScoped<ICUAlta<DTOMovimientoTipo>, CUAltaMovimientoTipo>();
@@ -25,15 +34,14 @@ namespace WebApi_2_P3
             builder.Services.AddScoped<ICUBuscarPorId<DTOMovimientoTipo>, CUBuscarMovimientoTipo>();
 
             //Articulo 
-            builder.Services.AddScoped<IRepositorioArticulo, RepositorioArticulo>();
-            builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
-            builder.Services.AddScoped<IRepositorioMovimientoTipo, RepositorioMovimientoTipo>();
-            builder.Services.AddScoped<IRepositorioMovimientoStock, RepositorioMovimientoStock>();
-            builder.Services.AddScoped<IRepositorioParametro, RepositorioParametro>();
             builder.Services.AddScoped<ICUBuscarPorId<DTOArticulo>, CUBuscarArticulo>();
+            builder.Services.AddScoped<ICUListado<DTOArticulo>, CUListadoArticulo>();
 
             //Movimiento Stock
             builder.Services.AddScoped<ICUAlta<DTOMovimientoStock>, CUAltaMovimientoStock>();
+            builder.Services.AddScoped<ICUListadoArticuloTipoDescendente<DTOMovimientoStock>, CUListadoArticuloTipoDescendente>();
+            builder.Services.AddScoped<ICUListadoAnualesPorTipo<DTOMovimientoStock>, CUListadoAnualesPorTipo>();
+            builder.Services.AddScoped<ICUListadoArticuloRangoPorFecha<DTOMovimientoStock>, CUListadoArticuloRangoPorFecha>();
 
             //Usuario
             builder.Services.AddScoped<ICUBuscarByEmail<DTOUsuario>, CUBuscarUsuarioByEmail>();

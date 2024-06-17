@@ -133,6 +133,11 @@ namespace LogicaDatos.Migrations
                         .HasColumnType("int")
                         .HasDefaultValue(0);
 
+                    b.Property<int>("topePaginado")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
                     b.HasKey("id");
 
                     b.ToTable("Parametros");
@@ -203,19 +208,22 @@ namespace LogicaDatos.Migrations
                         .WithMany()
                         .HasForeignKey("ArticuloId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_MovStock_Articulo");
 
                     b.HasOne("LogicaNegocio.Dominio.MovimientoTipo", "tipo")
                         .WithMany()
                         .HasForeignKey("TipoMovimientoId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_MovStock_MovTipo");
 
                     b.HasOne("LogicaNegocio.Dominio.Usuario", "usuario")
                         .WithMany()
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_MovStock_Usuario");
 
                     b.Navigation("articulo");
 
