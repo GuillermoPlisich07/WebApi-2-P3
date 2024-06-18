@@ -1,5 +1,7 @@
 ﻿using DTOs;
+using LogicaAplicacion.CasosUso;
 using LogicaAplicacion.InterfacesCU;
+using LogicaNegocio.Dominio;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.IdentityModel.Tokens;
@@ -22,11 +24,11 @@ namespace WebApi_2_P3.Controllers
         public ICUListadoArticuloRangoPorFecha<DTOMovimientoStock> CUListadoArticuloRangoPorFecha { get; set; }
         public ICUListadoArticuloTipoDescendente<DTOMovimientoStock> CUListadoArticuloTipoDescendente { get; set; }
 
-        public MovimientoStockController(ICUAlta<DTOMovimientoStock> cUAltaMovimientoStock, 
+        public MovimientoStockController(ICUAlta<DTOMovimientoStock> cUAltaMovimientoStock,
             ICUBuscarPorId<DTOArticulo> cUBuscarArticulo,
             ICUBuscarPorId<DTOMovimientoTipo> cUBuscarMovimientoTipo,
             ICUBuscarByEmail<DTOUsuario> cUBuscarByEmail,
-            ICUBuscarPorId<DTOParametro> cUBuscarParametro, 
+            ICUBuscarPorId<DTOParametro> cUBuscarParametro,
             ICUListadoAnualesPorTipo<DTOMovimientoStock> cUListadoAnualesPorTipo,
             ICUListadoArticuloRangoPorFecha<DTOMovimientoStock> cUListadoArticuloRangoPorFecha,
             ICUListadoArticuloTipoDescendente<DTOMovimientoStock> cUListadoArticuloTipoDescendente)
@@ -39,14 +41,6 @@ namespace WebApi_2_P3.Controllers
             CUListadoAnualesPorTipo = cUListadoAnualesPorTipo;
             CUListadoArticuloRangoPorFecha = cUListadoArticuloRangoPorFecha;
             CUListadoArticuloTipoDescendente = cUListadoArticuloTipoDescendente;
-        }
-
-
-        // GET api/<MovimientoStockController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
         }
 
         // POST api/<MovimientoStockController>
@@ -67,22 +61,24 @@ namespace WebApi_2_P3.Controllers
                 DTOUsuario usuario = CUBuscarByEmail.BuscarByEmail(movStock.email);
                 DTOParametro parametro = CUBuscarParametro.Buscar(1);
 
-                if (parametro.topeMovimiento<movStock.cantidadMovidas) return NotFound("La cantidad que desea mover supera el tope fijado") ;
+                if (parametro.topeMovimiento < movStock.cantidadMovidas) return NotFound("La cantidad que desea mover supera el tope fijado");
                 if (articulo == null) return NotFound("El articulo con id " + movStock.idMovimientoTipo + " no existe");
                 if (tipo == null) return NotFound("El tipo con id " + movStock.idMovimientoTipo + " no existe");
                 if (usuario == null) return NotFound("El usuario con el email " + movStock.email + " no existe");
-                if (usuario.rol.nombre!="Encargado") return NotFound("El usuario con debe tener rol de Encargado");
+                if (usuario.rol.nombre != "Encargado") return NotFound("El usuario con debe tener rol de Encargado");
+                if ((articulo.stock - movStock.cantidadMovidas)<0) return NotFound("La cantidad que desea mover supera el stock disponible");
 
                 DTOMovimientoStock nuevo = new DTOMovimientoStock()
                 {
-                    id=movStock.id,
-                    articulo= articulo,
-                    tipo= tipo,
-                    usuario= usuario,
+                    id = movStock.id,
+                    articulo = articulo,
+                    tipo = tipo,
+                    usuario = usuario,
                     cantidadMovidas = movStock.cantidadMovidas
                 };
 
                 CUAltaMovimientoStock.Alta(nuevo);
+                
                 return Ok();
             }
             catch (Exception ex)
@@ -91,13 +87,54 @@ namespace WebApi_2_P3.Controllers
             }
         }
 
-        // GET api/<MovimientoStockController>/5
-        [HttpGet("ListadoAnualesPorTipo/{id}")]
-        public IActionResult ListadoAnualesPorTipo(int id)
+        // GET api/<MovimientoStockController>
+        [HttpGet("ListadoAnualesPorTipo")]
+        public IActionResult ListadoAnualesPorTipo()
         {
             return Ok();
         }
 
+        [HttpGet("ListadoArticuloRangoPorFecha")]
+        public IActionResult ListadoArticuloRangoPorFecha(DateTime inicio, DateTime final, [FromQuery] List<int> idArticulos)
+        {
+            
+            if (inicio == null || final == null) return BadRequest("Las fechas no pueden ser vacias");
+            if (inicio > final) return BadRequest("La fecha de inicio no puede ser mayor a la del final");
+            if (idArticulos == null || idArticulos.Any(id => id <= 0)) return BadRequest("La lista de ID de artículos contiene valores enteros no Positivos");
 
+            List<DTOMovimientoStock> nuevo = null;
+
+            try
+            {
+                nuevo = CUListadoArticuloRangoPorFecha.ObtenerListado(inicio,final,idArticulos);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
+            return Ok(nuevo);
+        }
+
+        [HttpGet("ListadoArticuloTipoDescendente")]
+        public IActionResult ListadoArticuloTipoDescendente(int idArticulo, int idTipo)
+        {
+            if (idArticulo == null || idArticulo <= 0) return BadRequest("El ID del Articulo debe ser un entero Positivo");
+            if (idTipo == null || idTipo <= 0) return BadRequest("El ID del Tipo de Movimiento debe ser un entero Positivo");
+
+
+            List<DTOMovimientoStock> nuevo = null;
+
+            try
+            {
+                nuevo = CUListadoArticuloTipoDescendente.ObtenerListado(idArticulo,idTipo);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
+            return Ok(nuevo);
+        }
     }
 }

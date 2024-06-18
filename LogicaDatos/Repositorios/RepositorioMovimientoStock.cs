@@ -31,11 +31,6 @@ namespace LogicaDatos.Repositorios
                 item.tipo = tipo;
                 item.usuario = usuario;
 
-                // No funciona correctamente
-                //Contexto.Entry(item.usuario).State = EntityState.Unchanged;
-                //Contexto.Entry(item.tipo).State = EntityState.Unchanged;
-                //Contexto.Entry(item.articulo).State = EntityState.Unchanged;
-
 
                 item.fechaDeMovimiento = DateTime.Now;
                 Contexto.MovimientosStock.Add(item);

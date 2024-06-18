@@ -52,7 +52,7 @@ namespace WebApi_2_P3
 
             builder.Services.AddDbContext<DBContext>();
 
-            
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
