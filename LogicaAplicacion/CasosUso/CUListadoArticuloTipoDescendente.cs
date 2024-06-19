@@ -17,9 +17,9 @@ namespace LogicaAplicacion.CasosUso
             Repo = repo;
         }
 
-        public List<DTOMovimientoStock> ObtenerListado(int idArticulo, int idTipo)
+        public List<DTOMovimientoStock> ObtenerListado(int idArticulo, int idTipo, int pagina, int cantXPagina)
         {
-            return MapperMovimientoStock.ToListadoSimpleDTO(Repo.GetArticuloAndTipoDecending(idArticulo,idTipo));
+            return MapperMovimientoStock.ToListadoSimpleDTO(Repo.GetArticuloAndTipoDecending(idArticulo,idTipo,pagina,cantXPagina));
         }
     }
 }

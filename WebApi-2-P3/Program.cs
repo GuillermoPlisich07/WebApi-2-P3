@@ -3,6 +3,9 @@ using LogicaAplicacion.CasosUso;
 using LogicaAplicacion.InterfacesCU;
 using LogicaDatos.Repositorios;
 using LogicaNegocio.InterfacesRepositorios;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace WebApi_2_P3
 {
@@ -16,7 +19,7 @@ namespace WebApi_2_P3
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            
+
 
             //Repositorios
             builder.Services.AddScoped<IRepositorioArticulo, RepositorioArticulo>();
@@ -56,6 +59,20 @@ namespace WebApi_2_P3
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(opt =>
+                    {
+                        opt.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateIssuer = false,
+                            ValidateAudience = false,
+                            ValidateLifetime = false,
+                            ValidateIssuerSigningKey = true,
+
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Obligatorio_2024_Primer/Semestre!Programacion3"))
+                        };
+                    }
+                );
 
             var app = builder.Build();
 
@@ -66,6 +83,7 @@ namespace WebApi_2_P3
                 app.UseSwaggerUI();
             }
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 

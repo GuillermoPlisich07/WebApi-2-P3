@@ -8,6 +8,6 @@ namespace LogicaAplicacion.InterfacesCU
 {
     public interface ICUListadoArticuloRangoPorFecha <T>
     {
-        List<T> ObtenerListado(DateTime inicio, DateTime final, List<int> idArticulos);
+        List<T> ObtenerListado(DateTime inicio, DateTime final, List<int> idArticulos, int pagina, int cantXPagina);
     }
 }

@@ -8,6 +8,6 @@ namespace LogicaAplicacion.InterfacesCU
 {
     public interface ICUListadoArticuloTipoDescendente <T>
     {
-        List<T> ObtenerListado(int idArticulo, int idTipo);
+        List<T> ObtenerListado(int idArticulo, int idTipo, int pagina, int cantXPagina);
     }
 }

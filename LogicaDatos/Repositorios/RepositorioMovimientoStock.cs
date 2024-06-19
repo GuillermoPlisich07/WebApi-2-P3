@@ -51,7 +51,7 @@ namespace LogicaDatos.Repositorios
         }
 
 
-        public List<MovimientoStock> GetArticuloAndTipoDecending(int idArticulo, int idTipo)
+        public List<MovimientoStock> GetArticuloAndTipoDecending(int idArticulo, int idTipo, int pagina, int cantXPagina)
         {
             return Contexto.MovimientosStock
                 .Include(m => m.articulo)
@@ -63,7 +63,7 @@ namespace LogicaDatos.Repositorios
                     .ToList();
         }
 
-        public List<MovimientoStock> GetArticuloPorRangoDeFechas(DateTime inicio, DateTime final, List<int> idArticulos)
+        public List<MovimientoStock> GetArticuloPorRangoDeFechas(DateTime inicio, DateTime final, List<int> idArticulos, int pagina, int cantXPagina)
         {
             return Contexto.MovimientosStock
                 .Include(m => m.articulo)

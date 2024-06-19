@@ -11,6 +11,7 @@ namespace DTOs
     {
         public static DTOMovimientoStock ToDTOMovimientoStock(MovimientoStock ms)
         {
+            if (ms == null) return null;
             return new DTOMovimientoStock
             {
                 id = ms.id,
@@ -24,6 +25,7 @@ namespace DTOs
 
         public static MovimientoStock ToMovimientoStock(DTOMovimientoStock ms)
         {
+            if (ms == null) return null;
             return new MovimientoStock
             {
                 id = ms.id,

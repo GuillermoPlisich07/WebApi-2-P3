@@ -11,7 +11,7 @@ namespace DTOs
     {
         public static Parametro ToParametro(DTOParametro parametro)
         {
-
+            if (parametro == null) return null;
             return new Parametro()
             {
                 id = parametro.id,
@@ -22,7 +22,7 @@ namespace DTOs
 
         public static DTOParametro ToDTOParametro(Parametro parametro)
         {
-
+            if (parametro == null) return null;
             return new DTOParametro()
             {
                 id = parametro.id,

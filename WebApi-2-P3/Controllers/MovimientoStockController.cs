@@ -61,6 +61,7 @@ namespace WebApi_2_P3.Controllers
                 DTOUsuario usuario = CUBuscarByEmail.BuscarByEmail(movStock.email);
                 DTOParametro parametro = CUBuscarParametro.Buscar(1);
 
+                if (parametro == null) return NotFound("Ocurrio un error con los parametros del sistema.");
                 if (parametro.topeMovimiento < movStock.cantidadMovidas) return NotFound("La cantidad que desea mover supera el tope fijado");
                 if (articulo == null) return NotFound("El articulo con id " + movStock.idMovimientoTipo + " no existe");
                 if (tipo == null) return NotFound("El tipo con id " + movStock.idMovimientoTipo + " no existe");
@@ -95,7 +96,7 @@ namespace WebApi_2_P3.Controllers
         }
 
         [HttpGet("ListadoArticuloRangoPorFecha")]
-        public IActionResult ListadoArticuloRangoPorFecha(DateTime inicio, DateTime final, [FromQuery] List<int> idArticulos)
+        public IActionResult ListadoArticuloRangoPorFecha(DateTime inicio, DateTime final, [FromQuery] List<int> idArticulos, int pagina)
         {
             
             if (inicio == null || final == null) return BadRequest("Las fechas no pueden ser vacias");
@@ -106,7 +107,15 @@ namespace WebApi_2_P3.Controllers
 
             try
             {
-                nuevo = CUListadoArticuloRangoPorFecha.ObtenerListado(inicio,final,idArticulos);
+                DTOParametro parametro = CUBuscarParametro.Buscar(1);
+                if (parametro == null) return NotFound("Ocurrio un error con los parametros del sistema.");
+                int cantXPagina = parametro.topePaginado;
+
+                nuevo = CUListadoArticuloRangoPorFecha.ObtenerListado(inicio,final,idArticulos,pagina, cantXPagina);
+                if (!nuevo.Any())
+                {
+                    return NoContent();
+                }
             }
             catch(Exception ex)
             {
@@ -117,7 +126,7 @@ namespace WebApi_2_P3.Controllers
         }
 
         [HttpGet("ListadoArticuloTipoDescendente")]
-        public IActionResult ListadoArticuloTipoDescendente(int idArticulo, int idTipo)
+        public IActionResult ListadoArticuloTipoDescendente(int idArticulo, int idTipo, int pagina)
         {
             if (idArticulo == null || idArticulo <= 0) return BadRequest("El ID del Articulo debe ser un entero Positivo");
             if (idTipo == null || idTipo <= 0) return BadRequest("El ID del Tipo de Movimiento debe ser un entero Positivo");
@@ -127,7 +136,15 @@ namespace WebApi_2_P3.Controllers
 
             try
             {
-                nuevo = CUListadoArticuloTipoDescendente.ObtenerListado(idArticulo,idTipo);
+                DTOParametro parametro = CUBuscarParametro.Buscar(1);
+                if (parametro == null) return NotFound("Ocurrio un error con los parametros del sistema.");
+                int cantXPagina = parametro.topePaginado;
+
+                nuevo = CUListadoArticuloTipoDescendente.ObtenerListado(idArticulo,idTipo, pagina, cantXPagina);
+                if (!nuevo.Any())
+                {
+                    return NoContent();
+                }
             }
             catch (Exception ex)
             {

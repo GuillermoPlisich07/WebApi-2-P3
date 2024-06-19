@@ -18,9 +18,9 @@ namespace LogicaAplicacion.CasosUso
             Repo = repo;
         }
 
-        public List<DTOMovimientoStock> ObtenerListado(DateTime inicio, DateTime final, List<int> idArticulos)
+        public List<DTOMovimientoStock> ObtenerListado(DateTime inicio, DateTime final, List<int> idArticulos, int pagina, int cantXPagina)
         {
-            return MapperMovimientoStock.ToListadoSimpleDTO(Repo.GetArticuloPorRangoDeFechas(inicio, final,idArticulos));
+            return MapperMovimientoStock.ToListadoSimpleDTO(Repo.GetArticuloPorRangoDeFechas(inicio, final,idArticulos, pagina, cantXPagina));
         }
     }
 }
