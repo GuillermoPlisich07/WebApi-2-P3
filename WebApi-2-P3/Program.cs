@@ -70,7 +70,7 @@ namespace WebApi_2_P3
                             ValidateLifetime = false,
                             ValidateIssuerSigningKey = true,
 
-                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Obligatorio_2024_Primer/Semestre!Programacion3"))
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Encriptado_Password/Programacion3!WebApi12345678901234567890123456789012345678901234567890123456"))
                         };
                     }
                 );

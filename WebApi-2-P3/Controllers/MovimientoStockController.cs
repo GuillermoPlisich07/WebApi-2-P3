@@ -47,7 +47,7 @@ namespace WebApi_2_P3.Controllers
 
         // POST api/<MovimientoStockController>
         [HttpPost]
-        //[Authorize(Roles = "Encargado")]
+        [Authorize]
         public IActionResult Post([FromBody] DTOMovimientoStockVista movStock)
         {
             if (movStock == null) return BadRequest("Los datos proporcionados estan vacios");
@@ -93,7 +93,7 @@ namespace WebApi_2_P3.Controllers
 
         // GET api/<MovimientoStockController>
         [HttpGet("ListadoAnualesPorTipo")]
-        //[Authorize(Roles = "Encargado")]
+        [Authorize]
         public IActionResult ListadoAnualesPorTipo()
         {
             List<DTOResumenAnio> nuevo = null;
@@ -115,7 +115,7 @@ namespace WebApi_2_P3.Controllers
         }
 
         [HttpGet("ListadoArticuloRangoPorFecha")]
-        //[Authorize(Roles = "Encargado")]
+        [Authorize]
         public IActionResult ListadoArticuloRangoPorFecha(DateTime inicio, DateTime final, [FromQuery] List<int> idArticulos, int pagina)
         {
             
@@ -146,7 +146,7 @@ namespace WebApi_2_P3.Controllers
         }
 
         [HttpGet("ListadoArticuloTipoDescendente")]
-        //[Authorize(Roles = "Encargado")]
+        [Authorize]
         public IActionResult ListadoArticuloTipoDescendente(int idArticulo, int idTipo, int pagina)
         {
             if (idArticulo == null || idArticulo <= 0) return BadRequest("El ID del Articulo debe ser un entero Positivo");
