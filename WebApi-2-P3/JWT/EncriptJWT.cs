@@ -9,7 +9,7 @@ namespace WebApi_2_P3.JWT
     {
         public static string GenerarToken(string email, string rol)
         {
-            var TokenString = "";
+            var TokenString = "Encriptado_Password/Programacion3!WebApi";
             var TokenEncriptada = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(TokenString));
             List<Claim> claims = [
                                     new Claim(ClaimTypes.Email, email),

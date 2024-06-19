@@ -48,6 +48,7 @@ namespace WebApi_2_P3
 
             //Usuario
             builder.Services.AddScoped<ICUBuscarByEmail<DTOUsuario>, CUBuscarUsuarioByEmail>();
+            builder.Services.AddScoped<ICULogin<DTOUsuario>, CULogin>();
 
             //Parametro
             builder.Services.AddScoped<ICUBuscarPorId<DTOParametro>, CUBuscarParametro>();

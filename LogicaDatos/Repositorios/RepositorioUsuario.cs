@@ -18,11 +18,6 @@ namespace LogicaDatos.Repositorios
             Contexto = ctx;
         }
 
-        public List<Usuario> FindAll()
-        {
-            return Contexto.Usuarios.ToList();
-        }
-
         public Usuario Login(string email, string password)
         {
             Usuario user = FindByEmail(email);
@@ -46,12 +41,6 @@ namespace LogicaDatos.Repositorios
                 .Where(usu => usu.email == email)
                 .SingleOrDefault();
         }
-
-        public Usuario FindById(int id)
-        {
-            return Contexto.Usuarios
-            .Where(usu => usu.id == id)
-            .SingleOrDefault();
-        }
+     
     }
 }

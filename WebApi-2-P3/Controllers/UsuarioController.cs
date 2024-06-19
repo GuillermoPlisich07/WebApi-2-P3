@@ -1,4 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DTOs;
+using LogicaAplicacion.InterfacesCU;
+using LogicaNegocio.Dominio;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using WebApi_2_P3.JWT;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +14,33 @@ namespace WebApi_2_P3.Controllers
     [ApiController]
     public class UsuarioController : ControllerBase
     {
-        // GET: api/<UsuarioController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        public ICULogin<DTOUsuario> CULogin { get; set; }
 
-        // GET api/<UsuarioController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        public UsuarioController(ICULogin<DTOUsuario> cULogin)
         {
-            return "value";
+            CULogin = cULogin;
         }
 
         // POST api/<UsuarioController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [AllowAnonymous]
+        [HttpPost("login")]
+        public IActionResult Login([FromBody] DTOLogin usr)
         {
+            if (usr.email.IsNullOrEmpty()) return BadRequest("El campo Email no puede ser vacio.");
+            if (usr.password.IsNullOrEmpty()) return BadRequest("El campo Password no puede ser vacio.");
+            try
+            {
+                var usuario = CULogin.loguearse(usr.email,usr.password);
+                if(usuario == null) return Unauthorized("Credenciales Incorrectas");
+                string token = EncriptJWT.GenerarToken(usuario.Email, usuario.rol.nombre);
+                return Ok(new { Token = token, Rol = usuario.rol.nombre, Email = usuario.Email });
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized(new {Error = "Credenciales Incorrectas" });
+            }
         }
 
-        // PUT api/<UsuarioController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<UsuarioController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        
     }
 }
