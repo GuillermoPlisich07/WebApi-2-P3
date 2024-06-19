@@ -1,7 +1,9 @@
 ﻿using DTOs;
 using LogicaAplicacion.CasosUso;
 using LogicaAplicacion.InterfacesCU;
+using LogicaDatos.Migrations;
 using LogicaNegocio.Dominio;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.IdentityModel.Tokens;
@@ -20,7 +22,7 @@ namespace WebApi_2_P3.Controllers
         public ICUBuscarPorId<DTOMovimientoTipo> CUBuscarMovimientoTipo { get; set; }
         public ICUBuscarByEmail<DTOUsuario> CUBuscarByEmail { get; set; }
         public ICUBuscarPorId<DTOParametro> CUBuscarParametro { get; set; }
-        public ICUListadoAnualesPorTipo<DTOMovimientoStock> CUListadoAnualesPorTipo { get; set; }
+        public ICUListadoAnualesPorTipo<DTOResumenAnio> CUListadoAnualesPorTipo { get; set; }
         public ICUListadoArticuloRangoPorFecha<DTOMovimientoStock> CUListadoArticuloRangoPorFecha { get; set; }
         public ICUListadoArticuloTipoDescendente<DTOMovimientoStock> CUListadoArticuloTipoDescendente { get; set; }
 
@@ -29,7 +31,7 @@ namespace WebApi_2_P3.Controllers
             ICUBuscarPorId<DTOMovimientoTipo> cUBuscarMovimientoTipo,
             ICUBuscarByEmail<DTOUsuario> cUBuscarByEmail,
             ICUBuscarPorId<DTOParametro> cUBuscarParametro,
-            ICUListadoAnualesPorTipo<DTOMovimientoStock> cUListadoAnualesPorTipo,
+            ICUListadoAnualesPorTipo<DTOResumenAnio> cUListadoAnualesPorTipo,
             ICUListadoArticuloRangoPorFecha<DTOMovimientoStock> cUListadoArticuloRangoPorFecha,
             ICUListadoArticuloTipoDescendente<DTOMovimientoStock> cUListadoArticuloTipoDescendente)
         {
@@ -45,6 +47,7 @@ namespace WebApi_2_P3.Controllers
 
         // POST api/<MovimientoStockController>
         [HttpPost]
+        //[Authorize(Roles = "Encargado")]
         public IActionResult Post([FromBody] DTOMovimientoStockVista movStock)
         {
             if (movStock == null) return BadRequest("Los datos proporcionados estan vacios");
@@ -90,12 +93,29 @@ namespace WebApi_2_P3.Controllers
 
         // GET api/<MovimientoStockController>
         [HttpGet("ListadoAnualesPorTipo")]
+        //[Authorize(Roles = "Encargado")]
         public IActionResult ListadoAnualesPorTipo()
         {
-            return Ok();
+            List<DTOResumenAnio> nuevo = null;
+
+            try
+            {
+                nuevo = CUListadoAnualesPorTipo.ObtenerListado();
+                if (!nuevo.Any())
+                {
+                    return NoContent();
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
+            return Ok(nuevo);
         }
 
         [HttpGet("ListadoArticuloRangoPorFecha")]
+        //[Authorize(Roles = "Encargado")]
         public IActionResult ListadoArticuloRangoPorFecha(DateTime inicio, DateTime final, [FromQuery] List<int> idArticulos, int pagina)
         {
             
@@ -126,6 +146,7 @@ namespace WebApi_2_P3.Controllers
         }
 
         [HttpGet("ListadoArticuloTipoDescendente")]
+        //[Authorize(Roles = "Encargado")]
         public IActionResult ListadoArticuloTipoDescendente(int idArticulo, int idTipo, int pagina)
         {
             if (idArticulo == null || idArticulo <= 0) return BadRequest("El ID del Articulo debe ser un entero Positivo");

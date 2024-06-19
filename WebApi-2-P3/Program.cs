@@ -43,7 +43,7 @@ namespace WebApi_2_P3
             //Movimiento Stock
             builder.Services.AddScoped<ICUAlta<DTOMovimientoStock>, CUAltaMovimientoStock>();
             builder.Services.AddScoped<ICUListadoArticuloTipoDescendente<DTOMovimientoStock>, CUListadoArticuloTipoDescendente>();
-            builder.Services.AddScoped<ICUListadoAnualesPorTipo<DTOMovimientoStock>, CUListadoAnualesPorTipo>();
+            builder.Services.AddScoped<ICUListadoAnualesPorTipo<DTOResumenAnio>, CUListadoAnualesPorTipo>();
             builder.Services.AddScoped<ICUListadoArticuloRangoPorFecha<DTOMovimientoStock>, CUListadoArticuloRangoPorFecha>();
 
             //Usuario

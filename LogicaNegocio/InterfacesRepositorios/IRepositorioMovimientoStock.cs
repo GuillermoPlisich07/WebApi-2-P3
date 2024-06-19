@@ -14,7 +14,7 @@ namespace LogicaNegocio.InterfacesRepositorios
         MovimientoStock FindById(int id);
         List<MovimientoStock> GetArticuloAndTipoDecending(int idArticulo, int idTipo, int pagina, int cantXPagina);
         List<MovimientoStock> GetArticuloPorRangoDeFechas(DateTime inicio, DateTime final, List<int> idArticulos, int pagina, int cantXPagina);
-        List<MovimientoStock> GetResumenAnualesPorTipo();
+        List<ResumenAnio> GetResumenAnualesPorTipo();
 
     }
 }

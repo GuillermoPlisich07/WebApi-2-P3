@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace LogicaAplicacion.CasosUso
 {
-    public class CUListadoAnualesPorTipo : ICUListadoAnualesPorTipo<DTOMovimientoStock>
+    public class CUListadoAnualesPorTipo : ICUListadoAnualesPorTipo<DTOResumenAnio>
     {
         public IRepositorioMovimientoStock Repo { get; set; }
         public CUListadoAnualesPorTipo(IRepositorioMovimientoStock repo)
@@ -17,9 +17,9 @@ namespace LogicaAplicacion.CasosUso
             Repo = repo;
         }
 
-        public List<DTOMovimientoStock> ObtenerListado()
+        public List<DTOResumenAnio> ObtenerListado()
         {
-            return MapperMovimientoStock.ToListadoSimpleDTO(Repo.GetResumenAnualesPorTipo());
+            return MapperMovimientoStock.ToListadoResumenDTO(Repo.GetResumenAnualesPorTipo());
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Azure.Core;
+using DTOs;
 using LogicaNegocio.Dominio;
 using LogicaNegocio.InterfacesRepositorios;
 using Microsoft.EntityFrameworkCore;
@@ -53,32 +54,54 @@ namespace LogicaDatos.Repositorios
 
         public List<MovimientoStock> GetArticuloAndTipoDecending(int idArticulo, int idTipo, int pagina, int cantXPagina)
         {
+            int numRegistrosAnteriores = cantXPagina * (pagina - 1);
+
             return Contexto.MovimientosStock
                 .Include(m => m.articulo)
                 .Include(m => m.tipo)
                 .Include(m => m.usuario)
-                    .Where(m => m.articulo.id == idArticulo && m.tipo.id == idTipo)
-                    .OrderByDescending(m => m.fechaDeMovimiento)
-                    .ThenBy(m => m.cantidadMovidas)
-                    .ToList();
-        }
+                    .ThenInclude(u => u.rol)
+                .Where(m => m.articulo.id == idArticulo && m.tipo.id == idTipo)
+                .OrderByDescending(m => m.fechaDeMovimiento)
+                .ThenBy(m => m.cantidadMovidas)
+                .Skip(numRegistrosAnteriores)
+                .Take(cantXPagina)
+                .ToList();
+    }
 
         public List<MovimientoStock> GetArticuloPorRangoDeFechas(DateTime inicio, DateTime final, List<int> idArticulos, int pagina, int cantXPagina)
         {
+            int numRegistrosAnteriores = cantXPagina * (pagina - 1);
+
             return Contexto.MovimientosStock
                 .Include(m => m.articulo)
                 .Include(m => m.tipo)
                 .Include(m => m.usuario)
-                   .Where(m => idArticulos.Contains(m.articulo.id)
-                               && m.fechaDeMovimiento >= inicio
-                               && m.fechaDeMovimiento <= final)
-                   .Distinct()
-                   .ToList();
+                    .ThenInclude(u => u.rol)
+                .Where(m => idArticulos.Contains(m.articulo.id)
+                            && m.fechaDeMovimiento >= inicio
+                            && m.fechaDeMovimiento <= final)
+                .Distinct()
+                .Skip(numRegistrosAnteriores)
+                .Take(cantXPagina)
+                .ToList();
         }
 
-        public List<MovimientoStock> GetResumenAnualesPorTipo()
+        public List<ResumenAnio> GetResumenAnualesPorTipo()
         {
-            throw new NotImplementedException();
+            return Contexto.MovimientosStock
+                    .Include(m => m.tipo) // Para incluir el nombre del tipo de movimiento
+                    .GroupBy(m => new { Anio = m.fechaDeMovimiento.Year, m.tipo.nombre }) // Agrupar por año y nombre del tipo de movimiento
+                    .Select(g => new ResumenAnio
+                    {
+                        anio = g.Key.Anio,
+                        tipo = g.Key.nombre,
+                        cantMovidas = g.Sum(m => m.cantidadMovidas)
+                    })
+                    .OrderBy(r => r.anio)
+                    .ThenBy(r => r.tipo)
+                    .ToList();
+
         }
     }
 }
