@@ -114,7 +114,8 @@ namespace WebApi_2_P3.Controllers
             return Ok(nuevo);
         }
 
-        [HttpGet("ListadoArticuloRangoPorFecha/{inicio}/{final}/{idArticulos}/{pagina}")]
+        //[HttpGet("ListadoArticuloRangoPorFecha/{inicio}/{final}/{idArticulos}/{pagina}")]
+        [HttpGet("ListadoArticuloRangoPorFecha")]
         [Authorize]
         public IActionResult ListadoArticuloRangoPorFecha(DateTime? inicio, DateTime? final, [FromQuery] List<int> idArticulos, int pagina)
         {
