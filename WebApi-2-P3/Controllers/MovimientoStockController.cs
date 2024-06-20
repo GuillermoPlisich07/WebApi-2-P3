@@ -116,7 +116,7 @@ namespace WebApi_2_P3.Controllers
 
         [HttpGet("ListadoArticuloRangoPorFecha")]
         [Authorize]
-        public IActionResult ListadoArticuloRangoPorFecha(DateTime inicio, DateTime final, [FromQuery] List<int> idArticulos, int pagina)
+        public IActionResult ListadoArticuloRangoPorFecha(DateTime? inicio, DateTime? final, [FromQuery] List<int> idArticulos, int pagina)
         {
             
             if (inicio == null || final == null) return BadRequest("Las fechas no pueden ser vacias");
@@ -131,7 +131,7 @@ namespace WebApi_2_P3.Controllers
                 if (parametro == null) return NotFound("Ocurrio un error con los parametros del sistema.");
                 int cantXPagina = parametro.topePaginado;
 
-                nuevo = CUListadoArticuloRangoPorFecha.ObtenerListado(inicio,final,idArticulos,pagina, cantXPagina);
+                nuevo = CUListadoArticuloRangoPorFecha.ObtenerListado(inicio ?? DateTime.MinValue,final ?? DateTime.MaxValue,idArticulos,pagina, cantXPagina);
                 if (!nuevo.Any())
                 {
                     return NoContent();
