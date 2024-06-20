@@ -114,7 +114,7 @@ namespace WebApi_2_P3.Controllers
             return Ok(nuevo);
         }
 
-        [HttpGet("ListadoArticuloRangoPorFecha")]
+        [HttpGet("ListadoArticuloRangoPorFecha/{inicio}/{final}/{idArticulos}/{pagina}")]
         [Authorize]
         public IActionResult ListadoArticuloRangoPorFecha(DateTime? inicio, DateTime? final, [FromQuery] List<int> idArticulos, int pagina)
         {
@@ -145,7 +145,7 @@ namespace WebApi_2_P3.Controllers
             return Ok(nuevo);
         }
 
-        [HttpGet("ListadoArticuloTipoDescendente")]
+        [HttpGet("ListadoArticuloTipoDescendente/{idArticulo}/{idTipo}/{pagina}")]
         [Authorize]
         public IActionResult ListadoArticuloTipoDescendente(int idArticulo, int idTipo, int pagina)
         {
